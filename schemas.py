@@ -12,7 +12,7 @@ Model name is converted to lowercase for the collection name:
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List, Tuple
 
 # Example schemas (replace with your own):
 
@@ -37,6 +37,15 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Graffiti collaborative drawing schemas
+
+class Stroke(BaseModel):
+    """A single painted stroke made of a sequence of points on the wall."""
+    points: List[Tuple[float, float]] = Field(..., description="List of [x,y] points in canvas coordinates (0..width, 0..height)")
+    color: str = Field("#ff0055", description="Hex color of the stroke")
+    size: float = Field(8, ge=1, le=100, description="Brush size in pixels")
+    user: Optional[str] = Field(None, description="Optional user identifier")
 
 # Add your own schemas here:
 # --------------------------------------------------
